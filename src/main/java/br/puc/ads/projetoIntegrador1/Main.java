@@ -14,7 +14,7 @@ public class Main {
 
         Paciente paciente1 = new Paciente("Fran", 18);
 
-
+        //ESTUDAR DO-WHILE E SWITCH CASE.
 
 
         do {

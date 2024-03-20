@@ -1,7 +1,7 @@
 package br.puc.ads.projetoIntegrador1;
 
-import br.puc.ads.projetoIntegrador1.model.Paciente;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -11,21 +11,36 @@ public class Main {
         Boolean continuar = true;
         String resposta;
         Scanner sc = new Scanner(System.in);
+        Integer opMenu;
 
-        Paciente paciente1 = new Paciente("Fran", 18);
+
+        List<ArrayList> listaPacientes = new ArrayList<>();
+
+        [id, nome, [nomedavacine, lote, dataAplicação]]
+        [[id, nome, vacina], [id, nome, vacina],[id, nome, vacina]]
 
         //ESTUDAR DO-WHILE E SWITCH CASE.
 
 
         do {
-            System.out.println(paciente1);
 
-            System.out.println("Deseja sair?(sim ou não)");
-            resposta = sc.nextLine();
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Cadastrar novo Paciente");
+            System.out.println("2 - Aplicar vacina");
+            System.out.println("3 - Listar todos os Pacientes");
+            System.out.println("4 - Buscar Paciente pelo Nome");
+            System.out.println("5 - Atualizar Paciente");
+            System.out.println("6 - Excluir Paciente");
+            System.out.println("7 - Sair");
 
-            if (resposta.equals("sim")) {
-                continuar = false;
-            } else {
+            opMenu = sc.nextInt();
+
+            switch (opMenu) {
+                case 1:
+
+                case 7:
+                    System.out.println("Até logo.");
+                    continuar = false;
             }
 
         } while (continuar);

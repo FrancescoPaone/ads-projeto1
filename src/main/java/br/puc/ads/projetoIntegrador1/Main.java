@@ -36,6 +36,16 @@ public class Main {
                         System.out.println("Nome do paciente: " + nomePaciente);
                         System.out.println("Idade do paciente: " + idadeDoPaciente);
                         System.out.println("Data de nascimento paciente: " + dataDeNascimento);
+                        System.out.println("Vacinas tomadas:");
+
+                        for (int i = 0; i < vacinas.length; i++ )  {
+                            if (vacinas[i][0] != null && vacinas[i][1] != null && vacinas[i][2] != null) {
+                                System.out.println("Nome da vacina: " + vacinas[i][0]);
+                                System.out.println("Data da vacina: " + vacinas[i][1]);
+                                System.out.println("Lote da vacina: " + vacinas[i][2]);
+                            }
+                        }
+
                         System.out.println("------");
                         break;
                     } else {
@@ -75,8 +85,8 @@ public class Main {
 
                     if (posicaoVazia != -1) {
                         vacinas[posicaoVazia][0] = nomeVacina;
-                        vacinas[posicaoVazia][0] = dataVacina;
-                        vacinas[posicaoVazia][0] = loteVacina;
+                        vacinas[posicaoVazia][1] = dataVacina;
+                        vacinas[posicaoVazia][2] = loteVacina;
                         System.out.println("Vacina " + nomeVacina + " aplicada com sucesso ");
                         break;
                     }
@@ -104,7 +114,6 @@ public class Main {
                                 idadeDoPaciente = sc.nextInt();
                                 System.out.println("Idade modificada com sucesso.");
                                 break;
-
 
                             case 3:
                                 System.out.println("Digite a nova data de nascimento(dd/mm/aaaa) do paciente:");

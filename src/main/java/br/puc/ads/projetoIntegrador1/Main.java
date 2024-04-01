@@ -8,15 +8,13 @@ public class Main {
     static String nomePaciente = "";
     static int idadeDoPaciente = 0;
     static String dataDeNascimento = "";
-    static String[][] vacinas = new String[40][3];
+    static String[][] vacinas = new String[40][4];
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         int opMenu;
         boolean continuar = true;
-
-        vacinas[0][0] = "1";
 
         carregarDados();
 
@@ -43,10 +41,11 @@ public class Main {
                         System.out.println();
 
                         for (String[] vacina : vacinas) {
-                            if (vacina[0] != null && vacina[1] != null && vacina[2] != null) {
-                                System.out.println("Nome da vacina: " + vacina[0]);
-                                System.out.println("Data da vacina: " + vacina[1]);
-                                System.out.println("Lote da vacina: " + vacina[2]);
+                            if (vacina[0] != null) {
+
+                                System.out.println("Vacina: " + vacina[0] + " ---- Lote: " + vacina[2]);
+                                System.out.println("Data de aplicação: " + vacina[1]);
+                                System.out.println("Obs: " + vacina[3]);
                                 System.out.println();
                             }
                         }
@@ -77,8 +76,11 @@ public class Main {
                         String nomeVacina = sc.next();
                         System.out.println("Digite a data da vacina:");
                         String dataVacina = sc.next();
-                        System.out.println("Digite o lote da vacina:");
+                        System.out.println("Digite o lote da vacina: ");
                         String loteVacina = sc.next();
+                        System.out.println("Alguma observação a ser feita?");
+                        sc.nextLine();
+                        String obs = sc.nextLine();
 
                         int posicaoVazia = -1;
                         for (int i = 0; i < vacinas.length; i++) {
@@ -92,6 +94,7 @@ public class Main {
                             vacinas[posicaoVazia][0] = nomeVacina;
                             vacinas[posicaoVazia][1] = dataVacina;
                             vacinas[posicaoVazia][2] = loteVacina;
+                            vacinas[posicaoVazia][3] = obs;
                             System.out.println("Vacina " + nomeVacina + " aplicada com sucesso ");
                             break;
                         }
@@ -172,7 +175,7 @@ public class Main {
             bw.write(idadeDoPaciente + "\n");
             bw.write(dataDeNascimento + "\n");
             for (String[] vacina : vacinas) {
-                if (vacina[0] != null && vacina[1] != null && vacina[2] != null) {
+                if (vacina[0] != null ) {
                     bw.write(String.join(",", vacina) + "\n");
                 }
             }

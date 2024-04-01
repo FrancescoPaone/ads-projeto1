@@ -1,21 +1,24 @@
 package br.puc.ads.projetoIntegrador1;
 
+import java.io.*;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    static String arquivoDados = "dadosPaciente.txt";
+    static String nomePaciente = "";
+    static int idadeDoPaciente = 0;
+    static String dataDeNascimento = "";
+    static String[][] vacinas = new String[40][3];
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        Integer opMenu;
-        Boolean continuar = true;
+        int opMenu;
+        boolean continuar = true;
 
-        String nomePaciente = "";
-        int idadeDoPaciente = 0;
-        String dataDeNascimento = "";
+        vacinas[0][0] = "1";
 
-        String[][] vacinas = new String[40][3];
+        carregarDados();
 
         do {
 
@@ -30,22 +33,25 @@ public class Main {
             switch (opMenu) {
 
                 case 1:
-                    if (nomePaciente != "") {
-                        System.out.println("------");
+                    if (!nomePaciente.isEmpty()) {
+                        System.out.println("------------------------------");
                         System.out.println("Nome do paciente: " + nomePaciente);
                         System.out.println("Idade do paciente: " + idadeDoPaciente);
                         System.out.println("Data de nascimento paciente: " + dataDeNascimento);
+                        System.out.println();
                         System.out.println("Vacinas tomadas:");
+                        System.out.println();
 
-                        for (int i = 0; i < vacinas.length; i++ )  {
-                            if (vacinas[i][0] != null) {
-                                System.out.println("Nome da vacina: " + vacinas[i][0]);
-                                System.out.println("Data da vacina: " + vacinas[i][1]);
-                                System.out.println("Lote da vacina: " + vacinas[i][2]);
+                        for (String[] vacina : vacinas) {
+                            if (vacina[0] != null && vacina[1] != null && vacina[2] != null) {
+                                System.out.println("Nome da vacina: " + vacina[0]);
+                                System.out.println("Data da vacina: " + vacina[1]);
+                                System.out.println("Lote da vacina: " + vacina[2]);
+                                System.out.println();
                             }
                         }
 
-                        System.out.println("------");
+                        System.out.println("------------------------------");
                         break;
                     } else {
                         System.out.println("Nenhum paciente cadastrado. Cadastrastre o Paciente.");
@@ -53,7 +59,7 @@ public class Main {
                         nomePaciente = sc.next();
                         System.out.println("Digite a idade do paciente:");
                         idadeDoPaciente = sc.nextInt();
-                        System.out.println("Digite a data de nascimento(dd/mm/aaaa) do paciente:");
+                        System.out.println("Digite a data de nascimento (DD/MM/AAAA) do paciente:");
                         dataDeNascimento = sc.next();
                         System.out.println("O paciente: " + nomePaciente + " foi cadastrado com sucesso.");
                         break;
@@ -61,41 +67,41 @@ public class Main {
 
                 case 2:
 
-                    if (nomePaciente == ""){
+                    if (nomePaciente.isEmpty()) {
                         System.out.println("Nenhum paciente cadastrado, por favor, cadastre o paciente primeiro");
                         break;
-                    }else{
+                    } else {
 
-                    System.out.println("Aplicando vacina para " + nomePaciente);
-                    System.out.println("Digite o nome da vacina:");
-                    String nomeVacina = sc.next();
-                    System.out.println("Digite a data da vacina:");
-                    String dataVacina = sc.next();
-                    System.out.println("Digite o lote da vacina:");
-                    String loteVacina = sc.next();
+                        System.out.println("Aplicando vacina para " + nomePaciente);
+                        System.out.println("Digite o nome da vacina:");
+                        String nomeVacina = sc.next();
+                        System.out.println("Digite a data da vacina:");
+                        String dataVacina = sc.next();
+                        System.out.println("Digite o lote da vacina:");
+                        String loteVacina = sc.next();
 
-                    int posicaoVazia = -1;
-                    for (int i = 0; i < vacinas.length; i++) {
-                        if (vacinas[i][0] == null) {
-                            posicaoVazia = i;
+                        int posicaoVazia = -1;
+                        for (int i = 0; i < vacinas.length; i++) {
+                            if (vacinas[i][0] == null) {
+                                posicaoVazia = i;
+                                break;
+                            }
+                        }
+
+                        if (posicaoVazia != -1) {
+                            vacinas[posicaoVazia][0] = nomeVacina;
+                            vacinas[posicaoVazia][1] = dataVacina;
+                            vacinas[posicaoVazia][2] = loteVacina;
+                            System.out.println("Vacina " + nomeVacina + " aplicada com sucesso ");
                             break;
                         }
                     }
-
-                    if (posicaoVazia != -1) {
-                        vacinas[posicaoVazia][0] = nomeVacina;
-                        vacinas[posicaoVazia][1] = dataVacina;
-                        vacinas[posicaoVazia][2] = loteVacina;
-                        System.out.println("Vacina " + nomeVacina + " aplicada com sucesso ");
-                        break;
-                    }
-                        }
                 case 3:
 
-                    if (nomePaciente == ""){
+                    if (nomePaciente.isEmpty()) {
                         System.out.println("Nenhum paciente cadastrado, por favor, cadastre o paciente primeiro");
                         break;
-                    }else{
+                    } else {
                         System.out.println("O que deseja alterar?");
                         System.out.println("1 - Nome");
                         System.out.println("2 - Idade");
@@ -105,7 +111,7 @@ public class Main {
                             case 1:
                                 System.out.println("Digite o novo nome do paciente:");
                                 nomePaciente = sc.next();
-                                System.out.println("Nome modificada com sucesso.");
+                                System.out.println("Nome modificado com sucesso.");
                                 break;
 
                             case 2:
@@ -115,19 +121,63 @@ public class Main {
                                 break;
 
                             case 3:
-                                System.out.println("Digite a nova data de nascimento(dd/mm/aaaa) do paciente:");
+                                System.out.println("Digite a nova data de nascimento (DD/MM/AAAA) do paciente:");
                                 dataDeNascimento = sc.next();
                                 System.out.println("Data de nascimento modificada com sucesso.");
                                 break;
                         }
 
                     }
+                    break;
 
                 case 4:
+                    salvarDados();
                     System.out.println("Até logo.");
                     continuar = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
             }
 
         } while (continuar);
+    }
+
+    private static void carregarDados() {
+        File arquivo = new File(arquivoDados);
+        if (!arquivo.exists()) {
+            System.out.println("Nenhum dado encotrado. Iniciando novo cadastro...");
+            return;
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+            nomePaciente = br.readLine();
+            idadeDoPaciente = Integer.parseInt(br.readLine());
+            dataDeNascimento = br.readLine();
+            String linhaVacina;
+            int i = 0;
+            while ((linhaVacina = br.readLine()) != null) {
+                vacinas[i++] = linhaVacina.split(",");
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo de dados não encontrado.");
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo de dados: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Formato de número inválido nos dados carregados.");
+        }
+    }
+
+    private static void salvarDados() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(arquivoDados))) {
+            bw.write(nomePaciente + "\n");
+            bw.write(idadeDoPaciente + "\n");
+            bw.write(dataDeNascimento + "\n");
+            for (String[] vacina : vacinas) {
+                if (vacina[0] != null && vacina[1] != null && vacina[2] != null) {
+                    bw.write(String.join(",", vacina) + "\n");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar os dados: " + e.getMessage());
+        }
     }
 }

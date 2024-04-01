@@ -16,7 +16,6 @@ public class Main {
         String dataDeNascimento = "";
 
         String[][] vacinas = new String[40][3];
-        vacinas[0][0] = "1";
 
         do {
 
@@ -39,7 +38,7 @@ public class Main {
                         System.out.println("Vacinas tomadas:");
 
                         for (int i = 0; i < vacinas.length; i++ )  {
-                            if (vacinas[i][0] != null && vacinas[i][1] != null && vacinas[i][2] != null) {
+                            if (vacinas[i][0] != null) {
                                 System.out.println("Nome da vacina: " + vacinas[i][0]);
                                 System.out.println("Data da vacina: " + vacinas[i][1]);
                                 System.out.println("Lote da vacina: " + vacinas[i][2]);

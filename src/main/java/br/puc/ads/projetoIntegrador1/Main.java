@@ -1,6 +1,7 @@
 package br.puc.ads.projetoIntegrador1;
 
 import java.io.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -20,8 +21,8 @@ public class Main {
         carregarDados();
 
 
-            do {
-                try {
+        do {
+            try {
 
                 System.out.println("Escolha uma opção:");
                 System.out.println("1 - Cadastro/Informações do Paciente");
@@ -195,62 +196,65 @@ public class Main {
                         System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
                 }
 
-        }catch(Exception e){
-            System.out.println("Opção invalida.");
-            sc.nextLine();
-        }
-            } while (continuar);
-        }
+            } catch (InputMismatchException e) {
+                System.out.println("Formato inválido, tente novamente.");
+                sc.nextLine();
 
-        private static void carregarDados () {
-            File arquivo = new File(arquivoDados);
-            if (!arquivo.exists()) {
-                System.out.println("Nenhum dado encotrado. Iniciando novo cadastro...");
-                return;
+            } catch (Exception e) {
+                System.out.println("Opção invalida.");
+                sc.nextLine();
             }
-            try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-                nomePaciente = br.readLine();
-                idadeDoPaciente = Integer.parseInt(br.readLine());
-                dataDeNascimento = br.readLine();
-                String linhaVacina;
-                int i = 0;
-                while ((linhaVacina = br.readLine()) != null) {
-                    vacinas[i++] = linhaVacina.split(",");
-                    idVacina = i;
-                }
-            } catch (FileNotFoundException e) {
-                System.out.println("Arquivo de dados não encontrado.");
-            } catch (IOException e) {
-                System.out.println("Erro ao ler o arquivo de dados: " + e.getMessage());
-            } catch (NumberFormatException e) {
-                System.out.println("Formato de número inválido nos dados carregados.");
-            }
+        } while (continuar);
+    }
+
+    private static void carregarDados() {
+        File arquivo = new File(arquivoDados);
+        if (!arquivo.exists()) {
+            System.out.println("Nenhum dado encotrado. Iniciando novo cadastro...");
+            return;
         }
-
-        private static void salvarDados () {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(arquivoDados))) {
-                bw.write(nomePaciente + "\n");
-                bw.write(idadeDoPaciente + "\n");
-                bw.write(dataDeNascimento + "\n");
-                for (String[] vacina : vacinas) {
-                    if (vacina[0] != null) {
-                        bw.write(String.join(",", vacina) + "\n");
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println("Erro ao salvar os dados: " + e.getMessage());
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+            nomePaciente = br.readLine();
+            idadeDoPaciente = Integer.parseInt(br.readLine());
+            dataDeNascimento = br.readLine();
+            String linhaVacina;
+            int i = 0;
+            while ((linhaVacina = br.readLine()) != null) {
+                vacinas[i++] = linhaVacina.split(",");
+                idVacina = i;
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo de dados não encontrado.");
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo de dados: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Formato de número inválido nos dados carregados.");
         }
+    }
 
-        static Integer encontrarVacina (String id){
-
-            for (int i = 0; i < vacinas.length; i++) {
-                if (id.equals(vacinas[i][0])) {
-                    return i;
+    private static void salvarDados() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(arquivoDados))) {
+            bw.write(nomePaciente + "\n");
+            bw.write(idadeDoPaciente + "\n");
+            bw.write(dataDeNascimento + "\n");
+            for (String[] vacina : vacinas) {
+                if (vacina[0] != null) {
+                    bw.write(String.join(",", vacina) + "\n");
                 }
             }
-            return null;
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar os dados: " + e.getMessage());
         }
+    }
+
+    static Integer encontrarVacina(String id) {
+
+        for (int i = 0; i < vacinas.length; i++) {
+            if (id.equals(vacinas[i][0])) {
+                return i;
+            }
+        }
+        return null;
+    }
 }
-
 

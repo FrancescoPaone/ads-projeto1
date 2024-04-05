@@ -2,7 +2,7 @@
 
 ### Projeto desenvolvido para a diciplina: Projeto Integrador I-A (11306720001_20241_01)
 
-## DESAFIO SQL - MENTORIA +praTI
+## Carteira de Vacinação
 
 ### Pré requisitos:
 
